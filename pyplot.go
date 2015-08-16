@@ -23,7 +23,8 @@ func Show() {
 	defer os.Remove(f.Name())
 
 	_, err = f.Write([]byte(strings.Join(lines, "\n")))
-	
+	if err != nil { panic(err.Error()) }
+
 	out, err := exec.Command("python", f.Name()).CombinedOutput()
 	fmt.Printf("%s", out)
 }

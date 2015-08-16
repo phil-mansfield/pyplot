@@ -6,10 +6,10 @@ import (
 	"strings"
 )
 
-type Type int
+type pyplotType int
 
 const (
-	invalid Type = iota
+	invalid pyplotType = iota
 	Int
 	Number
 	Bool
@@ -31,7 +31,7 @@ func convertInt(val interface{}) (string, bool) {
 }
 
 func convertNumber(val interface{}) (string, bool) {
-	str, isInt := ConvertType(val, Int)
+	str, isInt := convertInt(val)
 	if isInt { return str, true }
 	switch val.(type) {
 	case float32, float64: return fmt.Sprintf("%g", val), true
@@ -54,7 +54,6 @@ func convertString(val interface{}) (string, bool) {
 	return strconv.Quote(str), true}
 
 func convertArray(val interface{}) (string, bool) {
-	return "", false
 	switch xs := val.(type) {
 	case []float64:
 		items := make([]string, len(xs))
@@ -104,7 +103,8 @@ func convertArray(val interface{}) (string, bool) {
 		items := make([]string, len(xs))
 		for i, x := range xs { items[i] = fmt.Sprintf("%d", x) }
 		return fmt.Sprintf("[%s]", strings.Join(items, ",")), true
-	default: return "", false
+	default:
+		return "", false
 	}
 }
 
@@ -113,7 +113,7 @@ func convertNone(val interface{}) (string, bool) {
 	return "", false
 }
 
-func ConvertType(val interface{}, t Type) (str string, ok bool) {
+func convertType(val interface{}, t pyplotType) (str string, ok bool) {
 	switch t {
 	case Int: return convertInt(val)
 	case Number: return convertNumber(val)
@@ -136,7 +136,6 @@ func ConvertType(val interface{}, t Type) (str string, ok bool) {
 	case NoneArray:
 		if str, ok := convertNone(val); ok { return str, ok }
 		return convertArray(val)
-	default:
-		return "", false
+	default: return "", false
 	}
 }
