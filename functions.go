@@ -123,5 +123,5 @@ func init() {
 	register(plotOptions, line2DOptions...)
 	register(xlabelOptions, textOptions...)
 	register(ylabelOptions, textOptions...)
-	register(titleOptions, textOptions...)
+	register(titleOptions, append([]optionFlag{loc}, textOptions...)...)
 }

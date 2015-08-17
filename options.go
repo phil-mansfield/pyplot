@@ -35,6 +35,7 @@ const (
 	linespacing
 	ls
 	lw
+	loc
 	lod
 	marker
 	markeredgecolor
@@ -95,6 +96,7 @@ var optionNames = map[optionFlag]string {
 	linewidth: "linewidth",
 	ls: "ls",
 	lw: "lw",
+	loc: "loc",
 	lod: "lod",
 	marker: "marker",
 	markeredgecolor: "markeredgecolor",
@@ -154,6 +156,7 @@ var optionFuncs = map[optionFlag]interface{} {
 	linewidth: Linewidth,
 	ls: Ls,
 	lw: Lw,
+	loc: Loc,
 	lod: Lod,
 	marker: Marker,
 	markeredgecolor: Markeredgecolor,
@@ -199,7 +202,7 @@ func checkOptionNames() {
 func checkOptionFuncs() {
 	for i := optionFlagStart + 1; i < optionFlagEnd; i++ {
 		if _, ok := optionFuncs[i]; !ok {
-			panic(fmt.Sprintf("option %d does not have a name", i))
+			panic(fmt.Sprintf("option %d does not have a function", i))
 		}
 	}
 }
@@ -351,6 +354,15 @@ func Linewidth(val string) Option {
 
 func Lw(val float64) Option {
 	return singletonOption(val, Number, lw)
+}
+
+func Loc(intr interface{}) Option {
+	if _, ok := convertInt(intr); ok {
+		return singletonOption(intr, Int, loc)
+	} else if _, ok := convertString(intr); ok {
+		return singletonOption(intr, String, loc)
+	}
+	panic("Option Loc only accepts ints and strings.")
 }
 
 func Lod(val bool) Option {
