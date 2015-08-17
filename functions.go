@@ -10,6 +10,9 @@ var (
 	xlabelOptions = make(map[optionFlag]bool)
 	ylabelOptions = make(map[optionFlag]bool)
 	titleOptions = make(map[optionFlag]bool)
+	linearScaleOptions = make(map[optionFlag]bool)
+	logScaleOptions = make(map[optionFlag]bool)
+	symlogScaleOptions = make(map[optionFlag]bool)
 )
 
 func Plot(args ...interface{}) {
@@ -124,4 +127,7 @@ func init() {
 	register(xlabelOptions, textOptions...)
 	register(ylabelOptions, textOptions...)
 	register(titleOptions, append([]optionFlag{loc}, textOptions...)...)
+	register(logScaleOptions, basex, basey, nonposx, nonposy, subsx, subsy)
+	register(symlogScaleOptions, basex, basey, nonposx, nonposy,
+		subsx, subsy, linscalex, linscaley)
 }

@@ -11,11 +11,13 @@ type Option internalOption
 
 const (
 	optionFlagStart optionFlag = iota
+	aa
 	alpha
 	animated
 	antialiased
-	aa
 	backgroundcolor
+	basex
+	basey
 	c
 	clipOn
 	color
@@ -33,6 +35,10 @@ const (
 	linestyle
 	linewidth
 	linespacing
+	linscalex
+	linscaley
+	linthreshx
+	linthreshy
 	ls
 	lw
 	loc
@@ -49,6 +55,8 @@ const (
 	ms
 	multialignment
 	name
+	nonposx
+	nonposy
 	pickradius
 	position
 	rotation
@@ -57,6 +65,8 @@ const (
 	solidCapstyle
 	solidJoinstyle
 	style
+	subsx
+	subsy
 	text
 	va
 	variant
@@ -72,11 +82,13 @@ const (
 )
 
 var optionNames = map[optionFlag]string {
+	aa: "aa",
 	alpha: "alpha",
 	animated: "animated",
 	antialiased: "antialiased",
-	aa: "aa",
 	backgroundcolor: "backgroundcolor",
+	basex: "basex",
+	basey: "basey",
 	c: "c",
 	clipOn: "clip_on",
 	color: "color",
@@ -94,6 +106,10 @@ var optionNames = map[optionFlag]string {
 	linespacing: "linespacing",
 	linestyle: "linestyle",
 	linewidth: "linewidth",
+	linscalex: "linscalex",
+	linscaley: "linscaley",
+	linthreshx: "linthreshx",
+	linthreshy: "linthreshy",
 	ls: "ls",
 	lw: "lw",
 	loc: "loc",
@@ -110,6 +126,8 @@ var optionNames = map[optionFlag]string {
 	ms: "ms",
 	multialignment: "multialignment",
 	name: "name",
+	nonposx: "nonposx",
+	nonposy: "nonposy",
 	pickradius: "pickradius",
 	position: "position",
 	rotation: "rotation",
@@ -118,6 +136,8 @@ var optionNames = map[optionFlag]string {
 	solidCapstyle: "solid_capstyle",
 	solidJoinstyle: "solid_joinstyle",
 	style: "style",
+	subsx: "subsx",
+	subsy: "subsy",
 	text: "text",
 	va: "va",
 	variant: "variant",
@@ -137,6 +157,8 @@ var optionFuncs = map[optionFlag]interface{} {
 	antialiased: Antialiased,
 	aa: Aa,
 	backgroundcolor: Backgroundcolor,
+	basex: Basex,
+	basey: Basey,
 	c: C,
 	clipOn: ClipOn,
 	color: Color,
@@ -154,6 +176,10 @@ var optionFuncs = map[optionFlag]interface{} {
 	linespacing: Linespacing,
 	linestyle: Linestyle,
 	linewidth: Linewidth,
+	linscalex: Linscalex,
+	linscaley: Linscaley,
+	linthreshx: Linthreshx,
+	linthreshy: Linthreshy,
 	ls: Ls,
 	lw: Lw,
 	loc: Loc,
@@ -170,6 +196,8 @@ var optionFuncs = map[optionFlag]interface{} {
 	ms: Ms,
 	multialignment: Multialignment,
 	name: Name,
+	nonposx: Nonposx,
+	nonposy: Nonposy,
 	pickradius: Pickradius,
 	position: Position,
 	rotation: Rotation,
@@ -177,6 +205,8 @@ var optionFuncs = map[optionFlag]interface{} {
 	size: Size,
 	solidCapstyle: SolidCapstyle,
 	solidJoinstyle: SolidJoinstyle,
+	subsx: Subsx,
+	subsy: Subsy,
 	style: Style,
 	text: Text,
 	va: Va,
@@ -247,6 +277,14 @@ func Aa(val bool) Option {
 
 func Backgroundcolor(val string) Option {
 	return singletonOption(val, String, backgroundcolor)
+}
+
+func Basex(val float64) Option {
+	return singletonOption(val, Number, basex)
+}
+
+func Basey(val float64) Option {
+	return singletonOption(val, Number, basey)
 }
 
 func C(val string) Option {
@@ -344,6 +382,22 @@ func Linestyle(val string) Option {
 	return singletonOption(val, String, linestyle)
 }
 
+func Linscalex(val float64) Option { 
+	return singletonOption(val, Number, linscalex)
+}
+
+func Linscaley(val float64) Option { 
+	return singletonOption(val, Number, linscaley)
+}
+
+func Linthreshx(val float64) Option {
+	return singletonOption(val, Number, linthreshx)
+}
+
+func Linthreshy(val float64) Option {
+	return singletonOption(val, Number, linthreshy)
+}
+
 func Ls(val string) Option {
 	return singletonOption(val, String, ls)
 }
@@ -424,6 +478,20 @@ func Name(val string) Option {
 	return singletonOption(val, String, name)
 }
 
+func Nonposx(val string) Option {
+	if val != "mask" && val != "clip" {
+		panic("Invalid value for Nonposx Option")
+	}
+	return singletonOption(val, String, nonposx)
+}
+
+func Nonposy(val string) Option {
+	if val != "mask" && val != "clip" {
+		panic("Invalid value for Nonposy Option")
+	}
+	return singletonOption(val, String, nonposy)
+}
+
 func Pickradius(val float64) Option {
 	return singletonOption(val, Number, pickradius)
 }
@@ -482,6 +550,14 @@ func Style(val string) Option {
 		panic("Invalid value for Style option.")
 	}
 	return singletonOption(val, String, style)
+}
+
+func Subsx(vals []int) Option {
+	return singletonOption(vals, Array, subsx)
+}
+
+func Subsy(vals []int) Option {
+	return singletonOption(vals, Array, subsy)
 }
 
 func Text(val string) Option {
