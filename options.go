@@ -74,8 +74,12 @@ const (
 	visible
 	weight
 	x
+	xmax
+	xmin
 	xdata
 	y
+	ymax
+	ymin
 	ydata
 	zorder
 	optionFlagEnd
@@ -145,8 +149,12 @@ var optionNames = map[optionFlag]string {
 	visible: "visible",
 	weight: "weight",
 	x: "x",
+	xmax: "xmax",
+	xmin: "xmin",
 	xdata: "xdata",
 	y: "y",
+	ymax: "ymax",
+	ymin: "ymin",
 	ydata: "ydata",
 	zorder: "zorder",
 }
@@ -215,8 +223,12 @@ var optionFuncs = map[optionFlag]interface{} {
 	visible: Visible,
 	weight: Weight,
 	x: X,
+	xmax: Xmax,
+	xmin: Xmin,
 	xdata: Xdata,
 	y: Y,
+	ymax: Ymax,
+	ymin: Ymin,
 	ydata: Ydata,
 	zorder: Zorder,
 }
@@ -606,12 +618,28 @@ func X(val float64) Option {
 	return singletonOption(val, Number, x)
 }
 
+func Xmax(intr interface{}) Option {
+	return singletonOption(intr, NoneNumber, xmax)
+}
+
+func Xmin(intr interface{}) Option {
+	return singletonOption(intr, NoneNumber, xmin)
+}
+
 func Xdata(vals []float64) Option {
 	return singletonOption(vals, Array, xdata)
 }
 
 func Y(val float64) Option {
 	return singletonOption(val, Number, y)
+}
+
+func Ymax(intr interface{}) Option {
+	return singletonOption(intr, NoneNumber, ymax)
+}
+
+func Ymin(intr interface{}) Option {
+	return singletonOption(intr, NoneNumber, ymin)
 }
 
 func Ydata(vals []float64) Option {

@@ -7,12 +7,13 @@ import (
 
 var (
 	plotOptions = make(map[optionFlag]bool)
-	xlabelOptions = make(map[optionFlag]bool)
-	ylabelOptions = make(map[optionFlag]bool)
+	labelOptions = make(map[optionFlag]bool)
 	titleOptions = make(map[optionFlag]bool)
 	linearScaleOptions = make(map[optionFlag]bool)
 	logScaleOptions = make(map[optionFlag]bool)
 	symlogScaleOptions = make(map[optionFlag]bool)
+	xlimOptions = make(map[optionFlag]bool)
+	ylimOptions = make(map[optionFlag]bool)
 )
 
 func Plot(args ...interface{}) {
@@ -45,9 +46,7 @@ func Plot(args ...interface{}) {
 		plotArgs = append(plotArgs, str)
 	}
 
-	line := strings.Join(
-		[]string{"plt.plot(", strings.Join(plotArgs, ","), ")"}, "",
-	)
+	line := fmt.Sprintf("plt.plot(%s)", strings.Join(plotArgs, ","))
 	lines = append(lines, line)
 }
 
@@ -56,14 +55,37 @@ func Xlabel(s string, opts ...Option) {
 	args[0], _ = convertString(s)
 
 	for _, opt := range opts {
-		str, ok := opt(xlabelOptions)
+		str, ok := opt(labelOptions)
 		if !ok { panic("Invalid Option argument for Xlabel function.") }
 		args = append(args, str)
 	}
 
-	line := strings.Join(
-		[]string{"plt.xlabel(",  strings.Join(args, ","), ")"}, "",
-	)
+	line := fmt.Sprintf("plt.xlabel(%s)", strings.Join(args, ","))
+	lines = append(lines, line)
+}
+
+func Xlim(args ...interface{}) {
+	limArgs := make([]string, 0)
+
+	switch len(args) {
+	case 1:
+		opt, ok := args[0].(Option)
+		if !ok { panic("Single arguments to Xlim must be Options.") }
+		str, ok := opt(xlimOptions)
+		if !ok { panic("Invalid Option argument for Xlim function.") }
+		limArgs = append(limArgs, str)
+	case 2:
+		strX, ok := convertType(args[0], NoneNumber)
+		if !ok { panic("Double arguments to Xlim must be a number or nil.") }
+		limArgs = append(limArgs, strX)
+		strY, ok := convertType(args[1], NoneNumber)
+		if !ok { panic("Double arguments to Xlim must be a number or nil.") }
+		limArgs = append(limArgs, strY)
+	default:
+		panic("Invalid number of args to Xlim.")
+	}
+
+	line := fmt.Sprintf("plt.xlim(%s)", strings.Join(limArgs, ","))
 	lines = append(lines, line)
 }
 
@@ -72,14 +94,37 @@ func Ylabel(s string, opts ...Option) {
 	args[0], _ = convertString(s)
 
 	for _, opt := range opts {
-		str, ok := opt(ylabelOptions)
-		if !ok { panic("Invalid Option argument for Xlabel function.") }
+		str, ok := opt(labelOptions)
+		if !ok { panic("Invalid Option argument for Ylabel function.") }
 		args = append(args, str)
 	}
 
-	line := strings.Join(
-		[]string{"plt.ylabel(",  strings.Join(args, ","), ")"}, "",
-	)
+	line := fmt.Sprintf("plt.ylabel(%s)", strings.Join(args, ","))
+	lines = append(lines, line)
+}
+
+func Ylim(args ...interface{}) {
+	limArgs := make([]string, 0)
+
+	switch len(args) {
+	case 1:
+		opt, ok := args[0].(Option)
+		if !ok { panic("Single arguments to Ylim must be Options.") }
+		str, ok := opt(ylimOptions)
+		if !ok { panic("Invalid Option argument for Ylim function.") }
+		limArgs = append(limArgs, str)
+	case 2:
+		strX, ok := convertType(args[0], NoneNumber)
+		if !ok { panic("Double arguments to Ylim must be a number or nil.") }
+		limArgs = append(limArgs, strX)
+		strY, ok := convertType(args[1], NoneNumber)
+		if !ok { panic("Double arguments to Ylim must be a number or nil.") }
+		limArgs = append(limArgs, strY)
+	default:
+		panic("Invalid number of args to Ylim.")
+	}
+
+	line := fmt.Sprintf("plt.ylim(%s)", strings.Join(limArgs, ","))
 	lines = append(lines, line)
 }
 
@@ -89,13 +134,11 @@ func Title(s string, opts ...Option) {
 
 	for _, opt := range opts {
 		str, ok := opt(titleOptions)
-		if !ok { panic("Invalid Option argument for Xlabel function.") }
+		if !ok { panic("Invalid Option argument for Title function.") }
 		args = append(args, str)
 	}
 
-	line := strings.Join(
-		[]string{"plt.title(",  strings.Join(args, ","), ")"}, "",
-	)
+	line := fmt.Sprintf("plt.title(%s)", strings.Join(args, ","))
 	lines = append(lines, line)
 }
 
@@ -124,10 +167,14 @@ func init() {
 	}
 
 	register(plotOptions, line2DOptions...)
-	register(xlabelOptions, textOptions...)
-	register(ylabelOptions, textOptions...)
+	register(labelOptions, textOptions...)
 	register(titleOptions, append([]optionFlag{loc}, textOptions...)...)
+
+	register(xlimOptions, xmin, xmax)
+	register(xlimOptions, ymin, ymax)
+
 	register(logScaleOptions, basex, basey, nonposx, nonposy, subsx, subsy)
 	register(symlogScaleOptions, basex, basey, nonposx, nonposy,
 		subsx, subsy, linscalex, linscaley)
+
 }

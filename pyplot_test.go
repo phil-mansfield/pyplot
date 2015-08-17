@@ -12,5 +12,6 @@ func TestPlot(t *testing.T) {
 	Title("My Test Plot", Fontsize(16), Loc("right"))
 	Xlabel("$t$ [seconds]", Name("Sans"))
 	Ylabel(`$2 \times\ \pi / {\rm meow}$`)
+	Ylim(nil, 11)
 	Show()
 }
