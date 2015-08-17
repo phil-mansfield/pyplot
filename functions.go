@@ -28,7 +28,7 @@ func Plot(args ...interface{}) {
 		}
 	}
 
-	for i := optStart; i < len(args); i += 2 {
+	for i := optStart; i < len(args); i++ {
 		opt, ok := args[i].(Option)
 		if !ok { panic("Non-Option argument given after Option argument.") }
 		str, ok := opt(plotOptions)
@@ -47,11 +47,25 @@ func register(fo funcOptions, flags ...optionFlag) {
 }
 
 func init() {
-	register(plotOptions,
+	checkOptionNames()
+	checkOptionFuncs()
+
+	textOptions := []optionFlag{
+		alpha, animated, backgroundcolor, clipOn, color, family,
+		horizontalalignment, ha, label, linespacing, lod, multialignment,
+		name, fontname, position, rotation, rotationMode, size, fontsize,
+		style, fontstyle, text, variant, verticalalignment, va, visible,
+		weight, fontweight, x, y, zorder,
+	}
+
+	line2DOptions := []optionFlag{
 		alpha, animated, antialiased, aa, clipOn, color, c, dashCapstyle,
-		dashJoinstyle, data, label, linestyle, ls, linewidth, lw, lod, marker,
+		dashJoinstyle, label, linestyle, ls, linewidth, lw, lod, marker,
 		markeredgecolor, mec, markeredgewidth, mew, markerfacecolor, mfc,
 		markersize, ms, markevery, pickradius, solidCapstyle, solidJoinstyle,
 		visible, xdata, ydata, zorder,
-	)
+	}
+
+	register(plotOptions, line2DOptions...)
+	_ = textOptions
 }
