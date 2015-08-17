@@ -116,7 +116,7 @@ func Plot(args ...interface{}) {
 	lines = append(lines, line)
 }
 
-func Rc(group string, opts ...Options) {
+func Rc(group string, opts ...Option) {
 	panic("NYI")
 }
 
