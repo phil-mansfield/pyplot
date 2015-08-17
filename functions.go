@@ -9,9 +9,12 @@ var (
 	plotOptions = make(map[optionFlag]bool)
 	labelOptions = make(map[optionFlag]bool)
 	titleOptions = make(map[optionFlag]bool)
-	linearScaleOptions = make(map[optionFlag]bool)
-	logScaleOptions = make(map[optionFlag]bool)
-	symlogScaleOptions = make(map[optionFlag]bool)
+	xLinearScaleOptions = make(map[optionFlag]bool)
+	xLogScaleOptions = make(map[optionFlag]bool)
+	xSymlogScaleOptions = make(map[optionFlag]bool)
+	yLinearScaleOptions = make(map[optionFlag]bool)
+	yLogScaleOptions = make(map[optionFlag]bool)
+	ySymlogScaleOptions = make(map[optionFlag]bool)
 	xlimOptions = make(map[optionFlag]bool)
 	ylimOptions = make(map[optionFlag]bool)
 )
@@ -86,6 +89,29 @@ func Xlim(args ...interface{}) {
 	}
 
 	line := fmt.Sprintf("plt.xlim(%s)", strings.Join(limArgs, ","))
+	lines = append(lines, line)
+}
+
+func Xscale(scale string, opts ...Option) {
+	args := make([]string, 1)
+	var fo funcOptions
+	switch scale {
+	case "linear": fo = xLinearScaleOptions
+	case "log": fo = xLogScaleOptions
+	case "symlog": fo = xSymlogScaleOptions
+	default:
+		panic("Invalid value for scale parameter to Xscale.")
+	}
+
+	args[0], _ = convertString(scale)
+
+	for _, opt := range opts {
+		str, ok := opt(fo)
+		if !ok { panic("Invalid Option argument for Xscale function") }
+		args = append(args, str)
+	}
+
+	line := fmt.Sprintf("plt.xscale(%s)", strings.Join(args, ","))
 	lines = append(lines, line)
 }
 
@@ -173,8 +199,8 @@ func init() {
 	register(xlimOptions, xmin, xmax)
 	register(xlimOptions, ymin, ymax)
 
-	register(logScaleOptions, basex, basey, nonposx, nonposy, subsx, subsy)
-	register(symlogScaleOptions, basex, basey, nonposx, nonposy,
-		subsx, subsy, linscalex, linscaley)
-
+	register(xLogScaleOptions, basex, nonposx, subsx)
+	register(xSymlogScaleOptions, basex, nonposx, subsx, linscalex)
+	register(yLogScaleOptions, basey, nonposy, subsy)
+	register(ySymlogScaleOptions, basey, nonposy, subsy, linscaley)
 }

@@ -13,5 +13,6 @@ func TestPlot(t *testing.T) {
 	Xlabel("$t$ [seconds]", Name("Sans"))
 	Ylabel(`$2 \times\ \pi / {\rm meow}$`)
 	Ylim(nil, 11)
+	Xscale("symlog", Subsx([]int{2, 3, 4, 5, 6, 7, 8, 9}))
 	Show()
 }
