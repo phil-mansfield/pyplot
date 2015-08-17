@@ -5,7 +5,13 @@ import (
 	"strings"
 )
 
-var plotOptions = make(map[optionFlag]bool)
+var (
+	plotOptions = make(map[optionFlag]bool)
+	xlabelOptions = make(map[optionFlag]bool)
+	ylabelOptions = make(map[optionFlag]bool)
+	titleOptions = make(map[optionFlag]bool)
+)
+
 func Plot(args ...interface{}) {
 	plotArgs := []string{}
 	optStart := optionStart(args)
@@ -42,6 +48,54 @@ func Plot(args ...interface{}) {
 	lines = append(lines, line)
 }
 
+func Xlabel(s string, opts ...Option) {
+	args := make([]string, 1)
+	args[0], _ = convertString(s)
+
+	for _, opt := range opts {
+		str, ok := opt(xlabelOptions)
+		if !ok { panic("Invalid Option argument for Xlabel function.") }
+		args = append(args, str)
+	}
+
+	line := strings.Join(
+		[]string{"plt.xlabel(",  strings.Join(args, ","), ")"}, "",
+	)
+	lines = append(lines, line)
+}
+
+func Ylabel(s string, opts ...Option) {
+	args := make([]string, 1)
+	args[0], _ = convertString(s)
+
+	for _, opt := range opts {
+		str, ok := opt(ylabelOptions)
+		if !ok { panic("Invalid Option argument for Xlabel function.") }
+		args = append(args, str)
+	}
+
+	line := strings.Join(
+		[]string{"plt.ylabel(",  strings.Join(args, ","), ")"}, "",
+	)
+	lines = append(lines, line)
+}
+
+func Title(s string, opts ...Option) {
+	args := make([]string, 1)
+	args[0], _ = convertString(s)
+
+	for _, opt := range opts {
+		str, ok := opt(titleOptions)
+		if !ok { panic("Invalid Option argument for Xlabel function.") }
+		args = append(args, str)
+	}
+
+	line := strings.Join(
+		[]string{"plt.title(",  strings.Join(args, ","), ")"}, "",
+	)
+	lines = append(lines, line)
+}
+
 func register(fo funcOptions, flags ...optionFlag) {
 	for _, flag := range flags { fo[flag] = true }
 }
@@ -67,5 +121,7 @@ func init() {
 	}
 
 	register(plotOptions, line2DOptions...)
-	_ = textOptions
+	register(xlabelOptions, textOptions...)
+	register(ylabelOptions, textOptions...)
+	register(titleOptions, textOptions...)
 }
