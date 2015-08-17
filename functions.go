@@ -25,6 +25,18 @@ var (
 
 )
 
+func Legend(opts ...Option) {
+	args := make([]string, 0)
+	for _, opt := range opts {
+		str, ok := opt(legendOptions)
+		if !ok { panic("Invalid Option argument for Legend.") }
+		args = append(args, str)
+	}
+
+	line := fmt.Sprintf("plt.legend(%s)", strings.Join(args, ","))
+	lines = append(lines, line)
+}
+
 func Plot(args ...interface{}) {
 	plotArgs := []string{}
 	optStart := optionStart(args)
@@ -199,6 +211,10 @@ func init() {
 	}
 
 	register(labelOptions, textOptions...)
+	register(legendOptions, loc, bboxToAnchor, ncol, fontsize, numpoints,
+		scatterpoints, scatteryoffsets, markerscale, frameon, fancybox, shadow,
+		framealpha, mode, title, borderpad, labelspacing, handlelength,
+		handletextpad, borderaxespad, columnspacing)
 	register(plotOptions, line2DOptions...)
 	register(titleOptions, append([]optionFlag{loc}, textOptions...)...)
 
