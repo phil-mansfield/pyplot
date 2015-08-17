@@ -16,20 +16,27 @@ const (
 	animated
 	antialiased
 	backgroundcolor
+	barsabove
 	basex
 	basey
 	bboxToAnchor
 	borderaxespad
 	borderpad
 	c
+	capsize
+	capthick
 	clipOn
 	color
 	columnspacing
 	dashCapstyle
 	dashJoinstyle
 	dashes
+	ecolor
+	elinewidth
+	errorevery
 	family
 	fancybox
+	fmtFlag
 	fontname
 	fontsize
 	fontstyle
@@ -49,6 +56,7 @@ const (
 	linscaley
 	linthreshx
 	linthreshy
+	lolims
 	ls
 	lw
 	loc
@@ -86,16 +94,21 @@ const (
 	subsy
 	text
 	title
+	uplims
 	va
 	variant
 	verticalalignment
 	visible
 	weight
 	x
+	xerr
 	xmax
 	xmin
 	xdata
+	xlolims
+	xuplims
 	y
+	yerr
 	ymax
 	ymin
 	ydata
@@ -111,18 +124,25 @@ var optionNames = map[optionFlag]string {
 	backgroundcolor: "backgroundcolor",
 	basex: "basex",
 	basey: "basey",
+	barsabove: "barsabove",
 	bboxToAnchor: "bbox_to_anchor",
 	borderaxespad: "borderaxespad",
 	borderpad: "borderpad",
 	c: "c",
+	capsize: "capsize",
+	capthick: "capthick",
 	clipOn: "clip_on",
 	color: "color",
 	columnspacing: "columnspacing",
 	dashCapstyle: "dash_capstyle",
 	dashJoinstyle: "dash_joinstyle",
 	dashes: "dashes",
+	ecolor: "ecolor",
+	elinewidth: "elinewidth",
+	errorevery: "errorevery",
 	family: "family",
 	fancybox: "fancybox",
+	fmtFlag: "fmt",
 	framealpha: "framealpha",
 	frameon: "frameon",
 	fontname: "fontname",
@@ -146,6 +166,7 @@ var optionNames = map[optionFlag]string {
 	lw: "lw",
 	loc: "loc",
 	lod: "lod",
+	lolims: "lolims",
 	marker: "marker",
 	markeredgecolor: "markeredgecolor",
 	markeredgewidth: "markeredgewidth",
@@ -179,16 +200,21 @@ var optionNames = map[optionFlag]string {
 	subsy: "subsy",
 	text: "text",
 	title: "title",
+	uplims: "uplims",
 	va: "va",
 	variant: "variant",
 	verticalalignment: "verticalalignment",
 	visible: "visible",
 	weight: "weight",
 	x: "x",
+	xerr: "xerr",
 	xmax: "xmax",
 	xmin: "xmin",
 	xdata: "xdata",
+	xlolims: "xlolims",
+	xuplims: "xuplims",
 	y: "y",
+	yerr: "yerr",
 	ymax: "ymax",
 	ymin: "ymin",
 	ydata: "ydata",
@@ -201,20 +227,27 @@ var optionFuncs = map[optionFlag]interface{} {
 	antialiased: Antialiased,
 	aa: Aa,
 	backgroundcolor: Backgroundcolor,
+	barsabove: Barsabove,
 	basex: Basex,
 	basey: Basey,
 	bboxToAnchor: Bboxtoanchor,
 	borderaxespad: Borderaxespad,
 	borderpad: Borderpad,
 	c: C,
+	capsize: Capsize,
+	capthick: Capthick,
 	clipOn: ClipOn,
 	color: Color,
 	columnspacing: Columnspacing,
 	dashCapstyle: DashCapstyle,
 	dashJoinstyle: DashJoinstyle,
 	dashes: Dashes,
+	ecolor: Ecolor,
+	elinewidth: Elinewidth,
+	errorevery: Errorevery,
 	family: Family,
 	fancybox: Fancybox,
+	fmtFlag: Fmt,
 	fontname: Fontname,
 	fontsize: Fontsize,
 	fontstyle: Fontstyle,
@@ -238,6 +271,7 @@ var optionFuncs = map[optionFlag]interface{} {
 	lw: Lw,
 	loc: Loc,
 	lod: Lod,
+	lolims: Lolims,
 	marker: Marker,
 	markeredgecolor: Markeredgecolor,
 	markeredgewidth: Markeredgewidth,
@@ -271,16 +305,21 @@ var optionFuncs = map[optionFlag]interface{} {
 	style: Style,
 	text: Text,
 	title: Title,
+	uplims: Uplims,
 	va: Va,
 	variant: Variant,
 	verticalalignment: Verticalalignment,
 	visible: Visible,
 	weight: Weight,
 	x: X,
+	xerr: Xerr,
+	xdata: Xdata,
+	xlolims: Xlolims,
 	xmax: Xmax,
 	xmin: Xmin,
-	xdata: Xdata,
+	xuplims: Xuplims,
 	y: Y,
+	yerr: Yerr,
 	ymax: Ymax,
 	ymin: Ymin,
 	ydata: Ydata,
@@ -317,12 +356,19 @@ func singletonOption(val interface{}, t pyplotType, f optionFlag) Option {
 		if _, ok := fo[f]; ok {
 			str, ok := convertType(val, t)
 			// TODO: better error message
-			if !ok { panic("Invalid type for Option.") }
+			if !ok {
+				panic(fmt.Sprintf("Value %v has invalid type for Option %s.",
+					val, optionNames[f]))
+			}
 			return fmt.Sprintf("%s=%s", optionNames[f], str), true
 		} else {
 			return "", false
 		}
 	}
+}
+
+func Aa(val bool) Option {
+	return singletonOption(val, Bool, aa)
 }
 
 func Alpha(val float64) Option {
@@ -337,12 +383,12 @@ func Antialiased(val bool) Option {
 	return singletonOption(val, Bool, antialiased)
 }
 
-func Aa(val bool) Option {
-	return singletonOption(val, Bool, aa)
-}
-
 func Backgroundcolor(val string) Option {
 	return singletonOption(val, String, backgroundcolor)
+}
+
+func Barsabove(val bool) Option {
+	return singletonOption(val, Bool, barsabove)
 }
 
 func Basex(val float64) Option {
@@ -370,6 +416,14 @@ func Borderpad(intr interface{}) Option {
 
 func C(val string) Option {
 	return singletonOption(val, String, c)
+}
+
+func Capsize(val float64) Option {
+	return singletonOption(val, Number, capsize)
+}
+
+func Capthick(val float64) Option {
+	return singletonOption(val, Number, capthick)
 }
 
 func ClipOn(val bool) Option {
@@ -400,8 +454,20 @@ func DashJoinstyle(val string) Option {
 	return singletonOption(val, String, dashJoinstyle)
 }
 
-func Dashes(intr interface{}) Option {
-	panic("NYI")
+func Dashes(vals []float64) Option {
+	return singletonOption(vals, Array, dashes)
+}
+
+func Ecolor(intr interface{}) Option {
+	return singletonOption(intr, NoneString, ecolor)
+}
+
+func Elinewidth(val float64) Option {
+	return singletonOption(val, Number, elinewidth)
+}
+
+func Errorevery(val int) Option {
+	return singletonOption(val, Int, errorevery)
 }
 
 func Family(val string) Option {
@@ -414,6 +480,10 @@ func Family(val string) Option {
 
 func Fancybox(intr interface{}) Option {
 	return singletonOption(intr, NoneBool, fancybox)
+}
+
+func Fmt(intr interface{}) Option {
+	return singletonOption(intr, NoneString, fmtFlag)
 }
 
 func Fontname(val string) Option {
@@ -476,6 +546,7 @@ func Horizontalalignment(val string) Option {
 }
 
 func Label(val string) Option {
+	singletonOption(val, String, label)
 	return singletonOption(val, String, label)
 }
 
@@ -505,6 +576,15 @@ func Linthreshx(val float64) Option {
 
 func Linthreshy(val float64) Option {
 	return singletonOption(val, Number, linthreshy)
+}
+
+func Lolims(intr interface{}) Option {
+	if _, ok := convertBool(intr); ok {
+		return singletonOption(intr, Bool, lolims)
+	} else if _, ok := convertBoolArray(intr); ok {
+		return singletonOption(intr, BoolArray, lolims)
+	}
+	panic("Invalid type for arugment to Lolims Option.")
 }
 
 func Ls(val string) Option {
@@ -701,6 +781,15 @@ func Text(val string) Option {
 	return singletonOption(val, String, text)
 }
 
+func Uplims(intr interface{}) Option {
+	if _, ok := convertBool(intr); ok {
+		return singletonOption(intr, Bool, uplims)
+	} else if _, ok := convertBoolArray(intr); ok {
+		return singletonOption(intr, BoolArray, uplims)
+	}
+	panic("Invalid type for arugment to Uplims Option.")
+}
+
 func Va(val string) Option {
 	if val != "center" && val != "top" &&
 		val != "bottom" && val != "baseline" {
@@ -743,6 +832,23 @@ func X(val float64) Option {
 	return singletonOption(val, Number, x)
 }
 
+func Xdata(vals []float64) Option {
+	return singletonOption(vals, Array, xdata)
+}
+
+func Xerr(vals []float64) Option {
+	return singletonOption(vals, Array, xerr)
+}
+
+func Xlolims(intr interface{}) Option {
+	if _, ok := convertBool(intr); ok {
+		return singletonOption(intr, Bool, xlolims)
+	} else if _, ok := convertBoolArray(intr); ok {
+		return singletonOption(intr, BoolArray, xlolims)
+	}
+	panic("Invalid type for arugment to Xlolims Option.")
+}
+
 func Xmax(intr interface{}) Option {
 	return singletonOption(intr, NoneNumber, xmax)
 }
@@ -751,12 +857,25 @@ func Xmin(intr interface{}) Option {
 	return singletonOption(intr, NoneNumber, xmin)
 }
 
-func Xdata(vals []float64) Option {
-	return singletonOption(vals, Array, xdata)
+func Xuplims(intr interface{}) Option {
+	if _, ok := convertBool(intr); ok {
+		return singletonOption(intr, Bool, xuplims)
+	} else if _, ok := convertBoolArray(intr); ok {
+		return singletonOption(intr, BoolArray, xuplims)
+	}
+	panic("Invalid type for arugment to Xuplims Option.")
 }
 
 func Y(val float64) Option {
 	return singletonOption(val, Number, y)
+}
+
+func Ydata(vals []float64) Option {
+	return singletonOption(vals, Array, ydata)
+}
+
+func Yerr(vals []float64) Option {
+	return singletonOption(vals, Array, yerr)
 }
 
 func Ymax(intr interface{}) Option {
@@ -765,10 +884,6 @@ func Ymax(intr interface{}) Option {
 
 func Ymin(intr interface{}) Option {
 	return singletonOption(intr, NoneNumber, ymin)
-}
-
-func Ydata(vals []float64) Option {
-	return singletonOption(vals, Array, ydata)
 }
 
 func Zorder(val float64) Option {

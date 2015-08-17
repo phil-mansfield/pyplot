@@ -6,6 +6,7 @@ import (
 )
 
 var (
+	errorbarOptions = make(map[optionFlag]bool)
 	labelOptions = make(map[optionFlag]bool)
 	legendOptions = make(map[optionFlag]bool)
 	plotOptions = make(map[optionFlag]bool)
@@ -24,6 +25,21 @@ var (
 	ySymlogScaleOptions = make(map[optionFlag]bool)
 
 )
+
+func Errorbar(xs, ys []float64, opts ...Option) {
+	args := make([]string, 2)
+	args[0], _ = convertArray(xs)
+	args[1], _ = convertArray(ys)
+
+	for _, opt := range opts {
+		str, ok := opt(errorbarOptions)
+		if !ok { panic("Invalid Option argument to Errorbar.") }
+		args = append(args, str)
+	}
+
+	line := fmt.Sprintf("plt.errorbar(%s)", strings.Join(args, ","))
+	lines = append(lines, line)
+}
 
 func Legend(opts ...Option) {
 	args := make([]string, 0)
@@ -210,6 +226,9 @@ func init() {
 		visible, xdata, ydata, zorder,
 	}
 
+	register(errorbarOptions, append([]optionFlag{yerr, xerr, fmtFlag, ecolor,
+		elinewidth, capsize, capthick, barsabove, lolims, uplims, xlolims,
+		xuplims, errorevery}, line2DOptions...)...)
 	register(labelOptions, textOptions...)
 	register(legendOptions, loc, bboxToAnchor, ncol, fontsize, numpoints,
 		scatterpoints, scatteryoffsets, markerscale, frameon, fancybox, shadow,

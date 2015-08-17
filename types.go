@@ -15,6 +15,7 @@ const (
 	Bool
 	String
 	Array
+	BoolArray
 	NoneInt
 	NoneNumber
 	NoneBool
@@ -51,7 +52,22 @@ func convertBool(val interface{}) (string, bool) {
 func convertString(val interface{}) (string, bool) {
 	str, ok := val.(string)
 	if !ok { return "", false }
-	return strconv.Quote(str), true}
+	return strconv.Quote(str), true
+}
+
+func convertBoolArray(val interface{}) (string, bool) {
+	bs, ok := val.([]bool)
+	if !ok { return "", false }
+	ss := make([]string, len(bs))
+	for i := range bs {
+		if bs[i] {
+			ss[i] = "True"
+		} else {
+			ss[i] = "False"
+		}
+	}
+	return fmt.Sprintf("[%s]", strings.Join(ss, ",")), true
+}
 
 func convertArray(val interface{}) (string, bool) {
 	switch xs := val.(type) {
@@ -120,6 +136,7 @@ func convertType(val interface{}, t pyplotType) (str string, ok bool) {
 	case Bool: return convertBool(val)
 	case String: return convertString(val)
 	case Array: return convertArray(val)
+	case BoolArray: return convertBoolArray(val)
 
 	case NoneInt:
 		if str, ok := convertNone(val); ok { return str, ok }
