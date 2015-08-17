@@ -15,6 +15,8 @@ const (
 	alpha
 	animated
 	antialiased
+	axis
+	b
 	backgroundcolor
 	barsabove
 	basex
@@ -31,11 +33,15 @@ const (
 	dashCapstyle
 	dashJoinstyle
 	dashes
+	dpi
 	ecolor
+	edgecolor
 	elinewidth
 	errorevery
+	facecolor
 	family
 	fancybox
+	figsize
 	fmtFlag
 	fontname
 	fontsize
@@ -75,6 +81,7 @@ const (
 	ms
 	multialignment
 	name
+	num
 	ncol
 	nonposx
 	nonposy
@@ -100,6 +107,7 @@ const (
 	verticalalignment
 	visible
 	weight
+	which
 	x
 	xerr
 	xmax
@@ -121,6 +129,8 @@ var optionNames = map[optionFlag]string {
 	alpha: "alpha",
 	animated: "animated",
 	antialiased: "antialiased",
+	axis: "axis",
+	b: "b",
 	backgroundcolor: "backgroundcolor",
 	basex: "basex",
 	basey: "basey",
@@ -137,11 +147,15 @@ var optionNames = map[optionFlag]string {
 	dashCapstyle: "dash_capstyle",
 	dashJoinstyle: "dash_joinstyle",
 	dashes: "dashes",
+	dpi: "dpi",
 	ecolor: "ecolor",
+	edgecolor: "edgecolor",
 	elinewidth: "elinewidth",
 	errorevery: "errorevery",
+	facecolor: "facecolor",
 	family: "family",
 	fancybox: "fancybox",
+	figsize: "figsize",
 	fmtFlag: "fmt",
 	framealpha: "framealpha",
 	frameon: "frameon",
@@ -184,6 +198,7 @@ var optionNames = map[optionFlag]string {
 	ncol: "ncol",
 	nonposx: "nonposx",
 	nonposy: "nonposy",
+	num: "num",
 	numpoints: "numpoints",
 	pickradius: "pickradius",
 	position: "position",
@@ -206,6 +221,7 @@ var optionNames = map[optionFlag]string {
 	verticalalignment: "verticalalignment",
 	visible: "visible",
 	weight: "weight",
+	which: "which",
 	x: "x",
 	xerr: "xerr",
 	xmax: "xmax",
@@ -222,10 +238,12 @@ var optionNames = map[optionFlag]string {
 }
 
 var optionFuncs = map[optionFlag]interface{} {
+	aa: Aa,
 	alpha: Alpha,
 	animated: Animated,
 	antialiased: Antialiased,
-	aa: Aa,
+	axis: Axis,
+	b: B,
 	backgroundcolor: Backgroundcolor,
 	barsabove: Barsabove,
 	basex: Basex,
@@ -242,11 +260,15 @@ var optionFuncs = map[optionFlag]interface{} {
 	dashCapstyle: DashCapstyle,
 	dashJoinstyle: DashJoinstyle,
 	dashes: Dashes,
+	dpi: Dpi,
 	ecolor: Ecolor,
+	edgecolor: Edgecolor,
 	elinewidth: Elinewidth,
 	errorevery: Errorevery,
+	facecolor: Facecolor,
 	family: Family,
 	fancybox: Fancybox,
+	figsize: Figsize,
 	fmtFlag: Fmt,
 	fontname: Fontname,
 	fontsize: Fontsize,
@@ -287,6 +309,7 @@ var optionFuncs = map[optionFlag]interface{} {
 	multialignment: Multialignment,
 	name: Name,
 	ncol: Ncol,
+	num: Num,
 	numpoints: Numpoints,
 	nonposx: Nonposx,
 	nonposy: Nonposy,
@@ -311,6 +334,7 @@ var optionFuncs = map[optionFlag]interface{} {
 	verticalalignment: Verticalalignment,
 	visible: Visible,
 	weight: Weight,
+	which: Which,
 	x: X,
 	xerr: Xerr,
 	xdata: Xdata,
@@ -381,6 +405,18 @@ func Animated(val bool) Option {
 
 func Antialiased(val bool) Option {
 	return singletonOption(val, Bool, antialiased)
+}
+
+func Axis(val string) Option {
+	if val != "both" && val != "x" && val != "y" {
+		panic("Invalid value for Axis Option.")
+	}
+
+	return singletonOption(val, String, axis)
+}
+
+func B(intr interface{}) Option {
+	return singletonOption(intr, NoneBool, b)
 }
 
 func Backgroundcolor(val string) Option {
@@ -458,8 +494,16 @@ func Dashes(vals []float64) Option {
 	return singletonOption(vals, Array, dashes)
 }
 
+func Dpi(intr interface{}) Option {
+	return singletonOption(intr, NoneInt, dpi)
+}
+
 func Ecolor(intr interface{}) Option {
 	return singletonOption(intr, NoneString, ecolor)
+}
+
+func Edgecolor(val string) Option {
+	return singletonOption(val, String, edgecolor)
 }
 
 func Elinewidth(val float64) Option {
@@ -468,6 +512,10 @@ func Elinewidth(val float64) Option {
 
 func Errorevery(val int) Option {
 	return singletonOption(val, Int, errorevery)
+}
+
+func Facecolor(val string) Option {
+	return singletonOption(val, String, facecolor)
 }
 
 func Family(val string) Option {
@@ -480,6 +528,13 @@ func Family(val string) Option {
 
 func Fancybox(intr interface{}) Option {
 	return singletonOption(intr, NoneBool, fancybox)
+}
+
+func Figsize(x, y int) Option {
+	return func(fo funcOptions) (string, bool) {
+		if _, ok := fo[figsize]; !ok { return "", false }
+		return fmt.Sprintf("%s=(%d,%d)", optionNames[figsize], x, y), true
+	}
 }
 
 func Fmt(intr interface{}) Option {
@@ -693,6 +748,15 @@ func Nonposy(val string) Option {
 	return singletonOption(val, String, nonposy)
 }
 
+func Num(intr interface{}) Option {
+	if _, ok := convertNumber(intr); ok {
+		return singletonOption(intr, Int, num)
+	} else if _, ok := convertString(intr); ok {
+		return singletonOption(intr, String, num)
+	}
+	panic("Num Option only accepts numbers and strings.")
+}
+
 func Numpoints(intr interface{}) Option {
 	return singletonOption(intr, NoneInt, numpoints)
 }
@@ -826,6 +890,13 @@ func Weight(val string) Option {
 	}
 
 	return singletonOption(val, String, weight)
+}
+
+func Which(val string) Option {
+	if val != "major" && val != "minor" && val != "both" {
+		panic("Invalid value for Which Option.")
+	}
+	return singletonOption(val, String, which)
 }
 
 func X(val float64) Option {

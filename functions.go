@@ -7,9 +7,12 @@ import (
 
 var (
 	errorbarOptions = make(map[optionFlag]bool)
+	figureOptions = make(map[optionFlag]bool)
+	gridOptions = make(map[optionFlag]bool)
 	labelOptions = make(map[optionFlag]bool)
 	legendOptions = make(map[optionFlag]bool)
 	plotOptions = make(map[optionFlag]bool)
+	rcOptions = make(map[optionFlag]bool)
 	titleOptions = make(map[optionFlag]bool)
 
 	xlimOptions = make(map[optionFlag]bool)
@@ -38,6 +41,32 @@ func Errorbar(xs, ys []float64, opts ...Option) {
 	}
 
 	line := fmt.Sprintf("plt.errorbar(%s)", strings.Join(args, ","))
+	lines = append(lines, line)
+}
+
+func Figure(opts ...Option) {
+	args := make([]string, 0)
+	
+	for _, opt := range opts {
+		str, ok := opt(figureOptions)
+		if !ok { panic("Invalid Option argument for Figure.") }
+		args = append(args, str)
+	}
+
+	line := fmt.Sprintf("plt.figure(%s)", strings.Join(args, ","))
+	lines = append(lines, line)
+}
+
+func Grid(opts ...Option) {
+	args := make([]string, 0)
+
+	for _, opt := range opts {
+		str, ok := opt(gridOptions)
+		if !ok { panic("Invalid Option argument to Errorbar.") }
+		args = append(args, str)
+	}
+
+	line := fmt.Sprintf("plt.grid(%s)", strings.Join(args, ","))
 	lines = append(lines, line)
 }
 
@@ -85,6 +114,10 @@ func Plot(args ...interface{}) {
 
 	line := fmt.Sprintf("plt.plot(%s)", strings.Join(plotArgs, ","))
 	lines = append(lines, line)
+}
+
+func Rc(group string, opts ...Options) {
+	panic("NYI")
 }
 
 func Title(s string, opts ...Option) {
@@ -229,6 +262,9 @@ func init() {
 	register(errorbarOptions, append([]optionFlag{yerr, xerr, fmtFlag, ecolor,
 		elinewidth, capsize, capthick, barsabove, lolims, uplims, xlolims,
 		xuplims, errorevery}, line2DOptions...)...)
+	register(figureOptions, num, figsize, dpi, facecolor, edgecolor)
+	register(gridOptions, append([]optionFlag{b, which, axis},
+		line2DOptions...)...)
 	register(labelOptions, textOptions...)
 	register(legendOptions, loc, bboxToAnchor, ncol, fontsize, numpoints,
 		scatterpoints, scatteryoffsets, markerscale, frameon, fancybox, shadow,

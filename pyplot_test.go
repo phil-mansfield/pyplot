@@ -11,7 +11,7 @@ func TestPlot(t *testing.T) {
 	errs := []float64{1, 1, 1, 1, 1, 1, 1}
 	lims := []bool{true, false, true, false, true, false, false}
 
-	_ = lims
+	Figure(Num(13), Facecolor("m"))
 	Plot(xs, ys1, "r", xs, ys2, "g", Lw(3.0), Label(`$\frac{1}{2}$`))
 	Errorbar(xs, []float64{3, 3, 3, 3, 3, 3, 3}, Xerr(errs), Yerr(errs),
 		C("c"), Lolims(lims), Label("My Errors"))
@@ -20,6 +20,7 @@ func TestPlot(t *testing.T) {
 	Ylabel(`$2 \times\ \pi / {\rm meow}$`)
 	Ylim(nil, 11)
 	Xscale("symlog", Subsx([]int{2, 3, 4, 5, 6, 7, 8, 9}))
+	Grid(Which("minor"), C("b"))
 	Legend(Fancybox(true))
 	Show()
 }
