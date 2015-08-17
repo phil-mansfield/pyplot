@@ -18,20 +18,30 @@ const (
 	backgroundcolor
 	basex
 	basey
+	bboxToAnchor
+	borderaxespad
+	borderpad
 	c
 	clipOn
 	color
+	columnspacing
 	dashCapstyle
 	dashJoinstyle
 	dashes
 	family
+	fancybox
 	fontname
 	fontsize
 	fontstyle
 	fontweight
+	framealpha
+	frameon
 	ha
+	handlelength
+	handletextpad
 	horizontalalignment
 	label
+	labelspacing
 	linestyle
 	linewidth
 	linespacing
@@ -47,20 +57,27 @@ const (
 	markeredgecolor
 	markeredgewidth
 	markerfacecolor
+	markerscale
 	markersize
 	markevery
 	mec
 	mew
 	mfc
+	mode
 	ms
 	multialignment
 	name
+	ncol
 	nonposx
 	nonposy
+	numpoints
 	pickradius
 	position
 	rotation
 	rotationMode
+	scatterpoints
+	scatteryoffsets
+	shadow
 	size
 	solidCapstyle
 	solidJoinstyle
@@ -68,6 +85,7 @@ const (
 	subsx
 	subsy
 	text
+	title
 	va
 	variant
 	verticalalignment
@@ -93,20 +111,30 @@ var optionNames = map[optionFlag]string {
 	backgroundcolor: "backgroundcolor",
 	basex: "basex",
 	basey: "basey",
+	bboxToAnchor: "bbox_to_anchor",
+	borderaxespad: "borderaxespad",
+	borderpad: "borderpad",
 	c: "c",
 	clipOn: "clip_on",
 	color: "color",
+	columnspacing: "columnspacing",
 	dashCapstyle: "dash_capstyle",
 	dashJoinstyle: "dash_joinstyle",
 	dashes: "dashes",
 	family: "family",
+	fancybox: "fancybox",
+	framealpha: "framealpha",
+	frameon: "frameon",
 	fontname: "fontname",
 	fontsize: "fontsize",
 	fontstyle: "fontstyle",
 	fontweight: "fontweight",
 	ha: "ha",
+	handlelength: "handlelength",
+	handletextpad: "handletextpad",
 	horizontalalignment: "horizontalalignment",
 	label: "label",
+	labelspacing: "labelspacing",
 	linespacing: "linespacing",
 	linestyle: "linestyle",
 	linewidth: "linewidth",
@@ -122,20 +150,27 @@ var optionNames = map[optionFlag]string {
 	markeredgecolor: "markeredgecolor",
 	markeredgewidth: "markeredgewidth",
 	markerfacecolor: "markerfacecolor",
+	markerscale: "markerscale",
 	markersize: "markersize",
 	markevery: "markevery",
 	mec: "mec",
 	mew: "mew",
 	mfc: "mfc",
+	mode: "mode",
 	ms: "ms",
 	multialignment: "multialignment",
 	name: "name",
+	ncol: "ncol",
 	nonposx: "nonposx",
 	nonposy: "nonposy",
+	numpoints: "numpoints",
 	pickradius: "pickradius",
 	position: "position",
 	rotation: "rotation",
 	rotationMode: "rotation_mode",
+	scatterpoints: "scatterpoints",
+	scatteryoffsets: "scatteryoffsets",
+	shadow: "shadow",
 	size: "size",
 	solidCapstyle: "solid_capstyle",
 	solidJoinstyle: "solid_joinstyle",
@@ -143,6 +178,7 @@ var optionNames = map[optionFlag]string {
 	subsx: "subsx",
 	subsy: "subsy",
 	text: "text",
+	title: "title",
 	va: "va",
 	variant: "variant",
 	verticalalignment: "verticalalignment",
@@ -167,20 +203,30 @@ var optionFuncs = map[optionFlag]interface{} {
 	backgroundcolor: Backgroundcolor,
 	basex: Basex,
 	basey: Basey,
+	bboxToAnchor: Bboxtoanchor,
+	borderaxespad: Borderaxespad,
+	borderpad: Borderpad,
 	c: C,
 	clipOn: ClipOn,
 	color: Color,
+	columnspacing: Columnspacing,
 	dashCapstyle: DashCapstyle,
 	dashJoinstyle: DashJoinstyle,
 	dashes: Dashes,
 	family: Family,
+	fancybox: Fancybox,
 	fontname: Fontname,
 	fontsize: Fontsize,
 	fontstyle: Fontstyle,
 	fontweight: Fontweight,
+	framealpha: Framealpha,
+	frameon: Frameon,
 	ha: Ha,
+	handlelength: Handlelength,
+	handletextpad: Handletextpad,
 	horizontalalignment: Horizontalalignment,
 	label: Label,
+	labelspacing: Labelspacing,
 	linespacing: Linespacing,
 	linestyle: Linestyle,
 	linewidth: Linewidth,
@@ -196,20 +242,27 @@ var optionFuncs = map[optionFlag]interface{} {
 	markeredgecolor: Markeredgecolor,
 	markeredgewidth: Markeredgewidth,
 	markerfacecolor: Markerfacecolor,
+	markerscale: Markerscale,
 	markersize: Markersize,
 	markevery: Markevery,
 	mec: Mec,
 	mew: Mew,
 	mfc: Mfc,
+	mode: Mode,
 	ms: Ms,
 	multialignment: Multialignment,
 	name: Name,
+	ncol: Ncol,
+	numpoints: Numpoints,
 	nonposx: Nonposx,
 	nonposy: Nonposy,
 	pickradius: Pickradius,
 	position: Position,
 	rotation: Rotation,
 	rotationMode: RotationMode,
+	scatterpoints: Scatterpoints,
+	scatteryoffsets: Scatteryoffsets,
+	shadow: Shadow,
 	size: Size,
 	solidCapstyle: SolidCapstyle,
 	solidJoinstyle: SolidJoinstyle,
@@ -217,6 +270,7 @@ var optionFuncs = map[optionFlag]interface{} {
 	subsy: Subsy,
 	style: Style,
 	text: Text,
+	title: Title,
 	va: Va,
 	variant: Variant,
 	verticalalignment: Verticalalignment,
@@ -299,6 +353,21 @@ func Basey(val float64) Option {
 	return singletonOption(val, Number, basey)
 }
 
+func Bboxtoanchor(x, y float64) Option {
+	return func(fo funcOptions) (string, bool) {
+		if _, ok := fo[bboxToAnchor]; ok { return "", false }
+		return fmt.Sprintf("(%g, %g)", x, y), true
+	}
+}
+
+func Borderaxespad(intr interface{}) Option {
+	return singletonOption(intr, NoneNumber, borderaxespad)
+}
+
+func Borderpad(intr interface{}) Option {
+	return singletonOption(intr, NoneNumber, borderpad)
+}
+
 func C(val string) Option {
 	return singletonOption(val, String, c)
 }
@@ -309,6 +378,10 @@ func ClipOn(val bool) Option {
 
 func Color(val string) Option {
 	return singletonOption(val, String, color)
+}
+
+func Columnspacing(intr interface{}) Option {
+	return singletonOption(intr, NoneNumber, columnspacing)
 }
 
 func DashCapstyle(val string) Option {
@@ -337,6 +410,10 @@ func Family(val string) Option {
 		panic("Invalid value for Family Option.")
 	}
 	return singletonOption(val, String, family)
+}
+
+func Fancybox(intr interface{}) Option {
+	return singletonOption(intr, NoneBool, fancybox)
 }
 
 func Fontname(val string) Option {
@@ -368,11 +445,27 @@ func Fontweight(val string) Option {
 	return singletonOption(val, String, fontweight)
 }
 
+func Framealpha(intr interface{}) Option {
+	return singletonOption(intr, NoneNumber, framealpha)
+}
+
+func Frameon(intr interface{}) Option {
+	return singletonOption(intr, NoneBool, frameon)
+}
+
 func Ha(val string) Option {
 	if val != "center" && val != "right" && val != "left" {
 		panic("Invalid value for Ha option.")
 	}
 	return singletonOption(val, String, ha)
+}
+
+func Handlelength(intr interface{}) Option {
+	return singletonOption(intr, NoneNumber, handlelength)
+}
+
+func Handletextpad(intr interface{}) Option {
+	return singletonOption(intr, NoneNumber, handletextpad)
 }
 
 func Horizontalalignment(val string) Option {
@@ -384,6 +477,10 @@ func Horizontalalignment(val string) Option {
 
 func Label(val string) Option {
 	return singletonOption(val, String, label)
+}
+
+func Labelspacing(intr interface{}) Option {
+	return singletonOption(intr, NoneNumber, labelspacing)
 }
 
 func Linespacing(val float64) Option {
@@ -455,6 +552,10 @@ func Markerfacecolor(val string) Option {
 	return singletonOption(val, String, markerfacecolor)
 }
 
+func Markerscale(intr interface{}) Option {
+	return singletonOption(intr, NoneNumber, markerscale)
+}
+
 func Markersize(val float64) Option {
 	return singletonOption(val, Number, markersize)
 }
@@ -475,6 +576,10 @@ func Mfc(val string) Option {
 	return singletonOption(val, String, mfc)
 }
 
+func Mode(intr interface{}) Option {
+	return singletonOption(intr, NoneString, mode)
+}
+
 func Ms(val float64) Option {
 	return singletonOption(val, Number, markersize)
 }
@@ -490,6 +595,10 @@ func Name(val string) Option {
 	return singletonOption(val, String, name)
 }
 
+func Ncol(val int) Option {
+	return singletonOption(val, Int, ncol)
+}
+
 func Nonposx(val string) Option {
 	if val != "mask" && val != "clip" {
 		panic("Invalid value for Nonposx Option")
@@ -502,6 +611,10 @@ func Nonposy(val string) Option {
 		panic("Invalid value for Nonposy Option")
 	}
 	return singletonOption(val, String, nonposy)
+}
+
+func Numpoints(intr interface{}) Option {
+	return singletonOption(intr, NoneInt, numpoints)
 }
 
 func Pickradius(val float64) Option {
@@ -532,6 +645,18 @@ func Rotation(intr interface{}) Option {
 
 func RotationMode(intr interface{}) Option {
 	return singletonOption(intr, NoneString, rotationMode)
+}
+
+func Scatterpoints(intr interface{}) Option {
+	return singletonOption(intr, NoneInt, scatterpoints)
+}
+
+func Scatteryoffsets(vals []float64) Option {
+	return singletonOption(vals, Array, scatteryoffsets)
+}
+
+func Shadow(intr interface{}) Option {
+	return singletonOption(intr, NoneBool, shadow)
 }
 
 func Size(intr interface{}) Option {

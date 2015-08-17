@@ -199,6 +199,10 @@ func init() {
 	}
 
 	register(labelOptions, textOptions...)
+	register(legendOptions, loc, bboxToAnchor, ncol, fontsize, numpoints,
+		scatterpoints, scatteryoffsets, markerscale, frameon, fancybox, shadow,
+		framealpha, mode, title, borderpad, labelspacing, handlelength,
+		handletextpad, borderaxespad, columnspacing)
 	register(plotOptions, line2DOptions...)
 	register(titleOptions, append([]optionFlag{loc}, textOptions...)...)
 
