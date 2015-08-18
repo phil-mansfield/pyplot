@@ -29,7 +29,7 @@ var (
 
 )
 
-func Errorbar(xs, ys []float64, opts ...Option) {
+func ErrorBar(xs, ys []float64, opts ...Option) {
 	args := make([]string, 2)
 	args[0], _ = convertArray(xs)
 	args[1], _ = convertArray(ys)
@@ -116,7 +116,7 @@ func Plot(args ...interface{}) {
 	lines = append(lines, line)
 }
 
-func Rc(group string, opts ...Option) {
+func RC(group string, opts ...Option) {
 	panic("NYI")
 }
 
@@ -134,7 +134,7 @@ func Title(s string, opts ...Option) {
 	lines = append(lines, line)
 }
 
-func Xlabel(s string, opts ...Option) {
+func XLabel(s string, opts ...Option) {
 	args := make([]string, 1)
 	args[0], _ = convertString(s)
 
@@ -148,7 +148,7 @@ func Xlabel(s string, opts ...Option) {
 	lines = append(lines, line)
 }
 
-func Xlim(args ...interface{}) {
+func XLim(args ...interface{}) {
 	limArgs := make([]string, 0)
 
 	switch len(args) {
@@ -173,7 +173,7 @@ func Xlim(args ...interface{}) {
 	lines = append(lines, line)
 }
 
-func Xscale(scale string, opts ...Option) {
+func XScale(scale string, opts ...Option) {
 	args := make([]string, 1)
 	var fo funcOptions
 	switch scale {
@@ -196,7 +196,7 @@ func Xscale(scale string, opts ...Option) {
 	lines = append(lines, line)
 }
 
-func Ylabel(s string, opts ...Option) {
+func YLabel(s string, opts ...Option) {
 	args := make([]string, 1)
 	args[0], _ = convertString(s)
 
@@ -210,7 +210,7 @@ func Ylabel(s string, opts ...Option) {
 	lines = append(lines, line)
 }
 
-func Ylim(args ...interface{}) {
+func YLim(args ...interface{}) {
 	limArgs := make([]string, 0)
 
 	switch len(args) {
@@ -232,6 +232,29 @@ func Ylim(args ...interface{}) {
 	}
 
 	line := fmt.Sprintf("plt.ylim(%s)", strings.Join(limArgs, ","))
+	lines = append(lines, line)
+}
+
+func YScale(scale string, opts ...Option) {
+	args := make([]string, 1)
+	var fo funcOptions
+	switch scale {
+	case "linear": fo = yLinearScaleOptions
+	case "log": fo = yLogScaleOptions
+	case "symlog": fo = ySymlogScaleOptions
+	default:
+		panic("Invalid value for scale parameter to Xscale.")
+	}
+
+	args[0], _ = convertString(scale)
+
+	for _, opt := range opts {
+		str, ok := opt(fo)
+		if !ok { panic("Invalid Option argument for Xscale function") }
+		args = append(args, str)
+	}
+
+	line := fmt.Sprintf("plt.yscale(%s)", strings.Join(args, ","))
 	lines = append(lines, line)
 }
 

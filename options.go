@@ -238,116 +238,116 @@ var optionNames = map[optionFlag]string {
 }
 
 var optionFuncs = map[optionFlag]interface{} {
-	aa: Aa,
+	aa: AA,
 	alpha: Alpha,
 	animated: Animated,
 	antialiased: Antialiased,
 	axis: Axis,
 	b: B,
-	backgroundcolor: Backgroundcolor,
-	barsabove: Barsabove,
-	basex: Basex,
-	basey: Basey,
-	bboxToAnchor: Bboxtoanchor,
-	borderaxespad: Borderaxespad,
-	borderpad: Borderpad,
+	backgroundcolor: BackgroundColor,
+	barsabove: BarsAbove,
+	basex: BaseX,
+	basey: BaseY,
+	bboxToAnchor: BboxToAnchor,
+	borderaxespad: BorderAxesPad,
+	borderpad: BorderPad,
 	c: C,
-	capsize: Capsize,
-	capthick: Capthick,
+	capsize: CapSize,
+	capthick: CapThick,
 	clipOn: ClipOn,
 	color: Color,
-	columnspacing: Columnspacing,
+	columnspacing: ColumnSpacing,
 	dashCapstyle: DashCapstyle,
 	dashJoinstyle: DashJoinstyle,
 	dashes: Dashes,
-	dpi: Dpi,
-	ecolor: Ecolor,
-	edgecolor: Edgecolor,
-	elinewidth: Elinewidth,
-	errorevery: Errorevery,
-	facecolor: Facecolor,
+	dpi: DPI,
+	ecolor: EColor,
+	edgecolor: EdgeColor,
+	elinewidth: ELineWidth,
+	errorevery: ErrorEvery,
+	facecolor: FaceColor,
 	family: Family,
-	fancybox: Fancybox,
-	figsize: Figsize,
+	fancybox: FancyBox,
+	figsize: FigSize,
 	fmtFlag: Fmt,
-	fontname: Fontname,
-	fontsize: Fontsize,
-	fontstyle: Fontstyle,
-	fontweight: Fontweight,
-	framealpha: Framealpha,
-	frameon: Frameon,
-	ha: Ha,
-	handlelength: Handlelength,
-	handletextpad: Handletextpad,
-	horizontalalignment: Horizontalalignment,
+	fontname: FontName,
+	fontsize: FontSize,
+	fontstyle: FontStyle,
+	fontweight: FontWeight,
+	framealpha: FrameAlpha,
+	frameon: FrameOn,
+	ha: HA,
+	handlelength: HandleLength,
+	handletextpad: HandleTextPad,
+	horizontalalignment: HorizontalAlignment,
 	label: Label,
-	labelspacing: Labelspacing,
-	linespacing: Linespacing,
-	linestyle: Linestyle,
-	linewidth: Linewidth,
-	linscalex: Linscalex,
-	linscaley: Linscaley,
-	linthreshx: Linthreshx,
-	linthreshy: Linthreshy,
-	ls: Ls,
-	lw: Lw,
+	labelspacing: LabelSpacing,
+	linespacing: LineSpacing,
+	linestyle: LineStyle,
+	linewidth: LineWidth,
+	linscalex: LinScaleX,
+	linscaley: LinScaleY,
+	linthreshx: LinThreshX,
+	linthreshy: LinThreshY,
+	ls: LS,
+	lw: LW,
 	loc: Loc,
-	lod: Lod,
-	lolims: Lolims,
+	lod: LoD,
+	lolims: LoLims,
 	marker: Marker,
-	markeredgecolor: Markeredgecolor,
-	markeredgewidth: Markeredgewidth,
-	markerfacecolor: Markerfacecolor,
-	markerscale: Markerscale,
-	markersize: Markersize,
-	markevery: Markevery,
-	mec: Mec,
-	mew: Mew,
-	mfc: Mfc,
+	markeredgecolor: MarkerEdgeColor,
+	markeredgewidth: MarkerEdgeWidth,
+	markerfacecolor: MarkerFaceColor,
+	markerscale: MarkerScale,
+	markersize: MarkerSize,
+	markevery: MarkEvery,
+	mec: MEC,
+	mew: MEW,
+	mfc: MFC,
 	mode: Mode,
-	ms: Ms,
-	multialignment: Multialignment,
+	ms: MS,
+	multialignment: MultiAlignment,
 	name: Name,
-	ncol: Ncol,
+	ncol: NCol,
 	num: Num,
-	numpoints: Numpoints,
-	nonposx: Nonposx,
-	nonposy: Nonposy,
-	pickradius: Pickradius,
+	numpoints: NumPoints,
+	nonposx: NonPosX,
+	nonposy: NonPosY,
+	pickradius: PickRadius,
 	position: Position,
 	rotation: Rotation,
 	rotationMode: RotationMode,
-	scatterpoints: Scatterpoints,
-	scatteryoffsets: Scatteryoffsets,
+	scatterpoints: ScatterPoints,
+	scatteryoffsets: ScatterYOffsets,
 	shadow: Shadow,
 	size: Size,
 	solidCapstyle: SolidCapstyle,
 	solidJoinstyle: SolidJoinstyle,
-	subsx: Subsx,
-	subsy: Subsy,
+	subsx: SubsX,
+	subsy: SubsY,
 	style: Style,
 	text: Text,
 	title: Title,
-	uplims: Uplims,
-	va: Va,
+	uplims: UpLims,
+	va: VA,
 	variant: Variant,
-	verticalalignment: Verticalalignment,
+	verticalalignment: VerticalAlignment,
 	visible: Visible,
 	weight: Weight,
 	which: Which,
 	x: X,
-	xerr: Xerr,
-	xdata: Xdata,
-	xlolims: Xlolims,
-	xmax: Xmax,
-	xmin: Xmin,
-	xuplims: Xuplims,
+	xerr: XErr,
+	xdata: XData,
+	xlolims: XLoLims,
+	xmax: XMax,
+	xmin: XMin,
+	xuplims: XUpLims,
 	y: Y,
-	yerr: Yerr,
-	ymax: Ymax,
-	ymin: Ymin,
-	ydata: Ydata,
-	zorder: Zorder,
+	yerr: YErr,
+	ymax: YMax,
+	ymin: YMin,
+	ydata: YData,
+	zorder: ZOrder,
 }
 
 func checkOptionNames() {
@@ -391,7 +391,7 @@ func singletonOption(val interface{}, t pyplotType, f optionFlag) Option {
 	}
 }
 
-func Aa(val bool) Option {
+func AA(val bool) Option {
 	return singletonOption(val, Bool, aa)
 }
 
@@ -419,34 +419,34 @@ func B(intr interface{}) Option {
 	return singletonOption(intr, NoneBool, b)
 }
 
-func Backgroundcolor(val string) Option {
+func BackgroundColor(val string) Option {
 	return singletonOption(val, String, backgroundcolor)
 }
 
-func Barsabove(val bool) Option {
+func BarsAbove(val bool) Option {
 	return singletonOption(val, Bool, barsabove)
 }
 
-func Basex(val float64) Option {
+func BaseX(val float64) Option {
 	return singletonOption(val, Number, basex)
 }
 
-func Basey(val float64) Option {
+func BaseY(val float64) Option {
 	return singletonOption(val, Number, basey)
 }
 
-func Bboxtoanchor(x, y float64) Option {
+func BboxToAnchor(x, y float64) Option {
 	return func(fo funcOptions) (string, bool) {
 		if _, ok := fo[bboxToAnchor]; ok { return "", false }
 		return fmt.Sprintf("(%g, %g)", x, y), true
 	}
 }
 
-func Borderaxespad(intr interface{}) Option {
+func BorderAxesPad(intr interface{}) Option {
 	return singletonOption(intr, NoneNumber, borderaxespad)
 }
 
-func Borderpad(intr interface{}) Option {
+func BorderPad(intr interface{}) Option {
 	return singletonOption(intr, NoneNumber, borderpad)
 }
 
@@ -454,11 +454,11 @@ func C(val string) Option {
 	return singletonOption(val, String, c)
 }
 
-func Capsize(val float64) Option {
+func CapSize(val float64) Option {
 	return singletonOption(val, Number, capsize)
 }
 
-func Capthick(val float64) Option {
+func CapThick(val float64) Option {
 	return singletonOption(val, Number, capthick)
 }
 
@@ -470,7 +470,7 @@ func Color(val string) Option {
 	return singletonOption(val, String, color)
 }
 
-func Columnspacing(intr interface{}) Option {
+func ColumnSpacing(intr interface{}) Option {
 	return singletonOption(intr, NoneNumber, columnspacing)
 }
 
@@ -494,27 +494,27 @@ func Dashes(vals []float64) Option {
 	return singletonOption(vals, Array, dashes)
 }
 
-func Dpi(intr interface{}) Option {
+func DPI(intr interface{}) Option {
 	return singletonOption(intr, NoneInt, dpi)
 }
 
-func Ecolor(intr interface{}) Option {
+func EColor(intr interface{}) Option {
 	return singletonOption(intr, NoneString, ecolor)
 }
 
-func Edgecolor(val string) Option {
+func EdgeColor(val string) Option {
 	return singletonOption(val, String, edgecolor)
 }
 
-func Elinewidth(val float64) Option {
+func ELineWidth(val float64) Option {
 	return singletonOption(val, Number, elinewidth)
 }
 
-func Errorevery(val int) Option {
+func ErrorEvery(val int) Option {
 	return singletonOption(val, Int, errorevery)
 }
 
-func Facecolor(val string) Option {
+func FaceColor(val string) Option {
 	return singletonOption(val, String, facecolor)
 }
 
@@ -526,11 +526,11 @@ func Family(val string) Option {
 	return singletonOption(val, String, family)
 }
 
-func Fancybox(intr interface{}) Option {
+func FancyBox(intr interface{}) Option {
 	return singletonOption(intr, NoneBool, fancybox)
 }
 
-func Figsize(x, y int) Option {
+func FigSize(x, y int) Option {
 	return func(fo funcOptions) (string, bool) {
 		if _, ok := fo[figsize]; !ok { return "", false }
 		return fmt.Sprintf("%s=(%d,%d)", optionNames[figsize], x, y), true
@@ -541,11 +541,11 @@ func Fmt(intr interface{}) Option {
 	return singletonOption(intr, NoneString, fmtFlag)
 }
 
-func Fontname(val string) Option {
+func FontName(val string) Option {
 	return singletonOption(val, String, fontname)
 }
 
-func Fontsize(val interface{}) Option {
+func FontSize(val interface{}) Option {
 	if _, ok := convertNumber(val); ok {
 		return singletonOption(val, Number, fontsize)
 	} else if _, ok := convertString(val); ok {
@@ -554,48 +554,48 @@ func Fontsize(val interface{}) Option {
 	panic("Fonsize Option only accepts strings and numbers.")
 }
 
-func Fontstyle(val string) Option {
+func FontStyle(val string) Option {
 	if val != "normal" && val != "italic" && val != "oblique" {
-		panic("Invalid value for Fontstyle Option.")
+		panic("Invalid value for FontStyle Option.")
 	}
 	return singletonOption(val, String, fontstyle)
 }
 
-func Fontweight(val string) Option {
+func FontWeight(val string) Option {
 	if val != "normal" && val != "bold" && val != "heavy" &&
 		val != "light" && val != "ultrabold" && val != "ultralight" {
-		panic("Invalid value for Fontweight Option.")
+		panic("Invalid value for FontWeight Option.")
 	}
 
 	return singletonOption(val, String, fontweight)
 }
 
-func Framealpha(intr interface{}) Option {
+func FrameAlpha(intr interface{}) Option {
 	return singletonOption(intr, NoneNumber, framealpha)
 }
 
-func Frameon(intr interface{}) Option {
+func FrameOn(intr interface{}) Option {
 	return singletonOption(intr, NoneBool, frameon)
 }
 
-func Ha(val string) Option {
+func HA(val string) Option {
 	if val != "center" && val != "right" && val != "left" {
-		panic("Invalid value for Ha option.")
+		panic("Invalid value for HA option.")
 	}
 	return singletonOption(val, String, ha)
 }
 
-func Handlelength(intr interface{}) Option {
+func HandleLength(intr interface{}) Option {
 	return singletonOption(intr, NoneNumber, handlelength)
 }
 
-func Handletextpad(intr interface{}) Option {
+func HandleTextPad(intr interface{}) Option {
 	return singletonOption(intr, NoneNumber, handletextpad)
 }
 
-func Horizontalalignment(val string) Option {
+func HorizontalAlignment(val string) Option {
 	if val != "center" && val != "right" && val != "left" {
-		panic("Invalid value for Horizontalalignment option.")
+		panic("Invalid value for HorizontalAlignment option.")
 	}
 	return singletonOption(val, String, horizontalalignment)
 }
@@ -605,52 +605,52 @@ func Label(val string) Option {
 	return singletonOption(val, String, label)
 }
 
-func Labelspacing(intr interface{}) Option {
+func LabelSpacing(intr interface{}) Option {
 	return singletonOption(intr, NoneNumber, labelspacing)
 }
 
-func Linespacing(val float64) Option {
+func LineSpacing(val float64) Option {
 	return singletonOption(val, Number, linespacing)
 }
 
-func Linestyle(val string) Option {
+func LineStyle(val string) Option {
 	return singletonOption(val, String, linestyle)
 }
 
-func Linscalex(val float64) Option { 
+func LinScaleX(val float64) Option { 
 	return singletonOption(val, Number, linscalex)
 }
 
-func Linscaley(val float64) Option { 
+func LinScaleY(val float64) Option { 
 	return singletonOption(val, Number, linscaley)
 }
 
-func Linthreshx(val float64) Option {
+func LinThreshX(val float64) Option {
 	return singletonOption(val, Number, linthreshx)
 }
 
-func Linthreshy(val float64) Option {
+func LinThreshY(val float64) Option {
 	return singletonOption(val, Number, linthreshy)
 }
 
-func Lolims(intr interface{}) Option {
+func LoLims(intr interface{}) Option {
 	if _, ok := convertBool(intr); ok {
 		return singletonOption(intr, Bool, lolims)
 	} else if _, ok := convertBoolArray(intr); ok {
 		return singletonOption(intr, BoolArray, lolims)
 	}
-	panic("Invalid type for arugment to Lolims Option.")
+	panic("Invalid type for arugment to LoLims Option.")
 }
 
-func Ls(val string) Option {
+func LS(val string) Option {
 	return singletonOption(val, String, ls)
 }
 
-func Linewidth(val string) Option {
+func LineWidth(val string) Option {
 	return singletonOption(val, String, linewidth)
 }
 
-func Lw(val float64) Option {
+func LW(val float64) Option {
 	return singletonOption(val, Number, lw)
 }
 
@@ -663,7 +663,7 @@ func Loc(intr interface{}) Option {
 	panic("Option Loc only accepts ints and strings.")
 }
 
-func Lod(val bool) Option {
+func LoD(val bool) Option {
 	return singletonOption(val, Bool, lod)
 }
 
@@ -675,39 +675,39 @@ func Marker(val string) Option {
 	return singletonOption(val, String, marker)
 }
 
-func Markeredgecolor(val string) Option {
+func MarkerEdgeColor(val string) Option {
 	return singletonOption(val, String, markeredgecolor)
 }
 
-func Markeredgewidth(val float64) Option {
+func MarkerEdgeWidth(val float64) Option {
 	return singletonOption(val, Number, markeredgewidth)
 }
 
-func Markerfacecolor(val string) Option {
+func MarkerFaceColor(val string) Option {
 	return singletonOption(val, String, markerfacecolor)
 }
 
-func Markerscale(intr interface{}) Option {
+func MarkerScale(intr interface{}) Option {
 	return singletonOption(intr, NoneNumber, markerscale)
 }
 
-func Markersize(val float64) Option {
+func MarkerSize(val float64) Option {
 	return singletonOption(val, Number, markersize)
 }
 
-func Markevery(val float64) Option {
+func MarkEvery(val float64) Option {
 	panic("NYI")
 }
 
-func Mec(val string) Option {
+func MEC(val string) Option {
 	return singletonOption(val, String, mec)
 }
 
-func Mew(val float64) Option {
+func MEW(val float64) Option {
 	return singletonOption(val, Number, mew)
 }
 
-func Mfc(val string) Option {
+func MFC(val string) Option {
 	return singletonOption(val, String, mfc)
 }
 
@@ -715,13 +715,13 @@ func Mode(intr interface{}) Option {
 	return singletonOption(intr, NoneString, mode)
 }
 
-func Ms(val float64) Option {
+func MS(val float64) Option {
 	return singletonOption(val, Number, markersize)
 }
 
-func Multialignment(val string) Option {
+func MultiAlignment(val string) Option {
 	if val != "left" && val != "center" && val != "right" {
-		panic("Invalid value for Multialignment Option.")
+		panic("Invalid value for MultiAlignment Option.")
 	}
 	return singletonOption(val, String, multialignment)
 }
@@ -730,20 +730,20 @@ func Name(val string) Option {
 	return singletonOption(val, String, name)
 }
 
-func Ncol(val int) Option {
+func NCol(val int) Option {
 	return singletonOption(val, Int, ncol)
 }
 
-func Nonposx(val string) Option {
+func NonPosX(val string) Option {
 	if val != "mask" && val != "clip" {
-		panic("Invalid value for Nonposx Option")
+		panic("Invalid value for NonPosX Option")
 	}
 	return singletonOption(val, String, nonposx)
 }
 
-func Nonposy(val string) Option {
+func NonPosY(val string) Option {
 	if val != "mask" && val != "clip" {
-		panic("Invalid value for Nonposy Option")
+		panic("Invalid value for NonPosY Option")
 	}
 	return singletonOption(val, String, nonposy)
 }
@@ -757,11 +757,11 @@ func Num(intr interface{}) Option {
 	panic("Num Option only accepts numbers and strings.")
 }
 
-func Numpoints(intr interface{}) Option {
+func NumPoints(intr interface{}) Option {
 	return singletonOption(intr, NoneInt, numpoints)
 }
 
-func Pickradius(val float64) Option {
+func PickRadius(val float64) Option {
 	return singletonOption(val, Number, pickradius)
 }
 
@@ -791,11 +791,11 @@ func RotationMode(intr interface{}) Option {
 	return singletonOption(intr, NoneString, rotationMode)
 }
 
-func Scatterpoints(intr interface{}) Option {
+func ScatterPoints(intr interface{}) Option {
 	return singletonOption(intr, NoneInt, scatterpoints)
 }
 
-func Scatteryoffsets(vals []float64) Option {
+func ScatterYOffsets(vals []float64) Option {
 	return singletonOption(vals, Array, scatteryoffsets)
 }
 
@@ -833,11 +833,11 @@ func Style(val string) Option {
 	return singletonOption(val, String, style)
 }
 
-func Subsx(vals []int) Option {
+func SubsX(vals []int) Option {
 	return singletonOption(vals, Array, subsx)
 }
 
-func Subsy(vals []int) Option {
+func SubsY(vals []int) Option {
 	return singletonOption(vals, Array, subsy)
 }
 
@@ -845,19 +845,19 @@ func Text(val string) Option {
 	return singletonOption(val, String, text)
 }
 
-func Uplims(intr interface{}) Option {
+func UpLims(intr interface{}) Option {
 	if _, ok := convertBool(intr); ok {
 		return singletonOption(intr, Bool, uplims)
 	} else if _, ok := convertBoolArray(intr); ok {
 		return singletonOption(intr, BoolArray, uplims)
 	}
-	panic("Invalid type for arugment to Uplims Option.")
+	panic("Invalid type for arugment to UpLims Option.")
 }
 
-func Va(val string) Option {
+func VA(val string) Option {
 	if val != "center" && val != "top" &&
 		val != "bottom" && val != "baseline" {
-		panic("Invalid value for Va Option.")
+		panic("Invalid value for VA Option.")
 	}
 
 	return singletonOption(val, String, va)
@@ -870,10 +870,10 @@ func Variant(val string) Option {
 	return singletonOption(val, String, variant)
 }
 
-func Verticalalignment(val string) Option {
+func VerticalAlignment(val string) Option {
 	if val != "center" && val != "top" &&
 		val != "bottom" && val != "baseline" {
-		panic("Invalid value for Verticalalignment Option.")
+		panic("Invalid value for VerticalAlignment Option.")
 	}
 
 	return singletonOption(val, String, verticalalignment)
@@ -903,60 +903,60 @@ func X(val float64) Option {
 	return singletonOption(val, Number, x)
 }
 
-func Xdata(vals []float64) Option {
+func XData(vals []float64) Option {
 	return singletonOption(vals, Array, xdata)
 }
 
-func Xerr(vals []float64) Option {
+func XErr(vals []float64) Option {
 	return singletonOption(vals, Array, xerr)
 }
 
-func Xlolims(intr interface{}) Option {
+func XLoLims(intr interface{}) Option {
 	if _, ok := convertBool(intr); ok {
 		return singletonOption(intr, Bool, xlolims)
 	} else if _, ok := convertBoolArray(intr); ok {
 		return singletonOption(intr, BoolArray, xlolims)
 	}
-	panic("Invalid type for arugment to Xlolims Option.")
+	panic("Invalid type for arugment to XLoLims Option.")
 }
 
-func Xmax(intr interface{}) Option {
+func XMax(intr interface{}) Option {
 	return singletonOption(intr, NoneNumber, xmax)
 }
 
-func Xmin(intr interface{}) Option {
+func XMin(intr interface{}) Option {
 	return singletonOption(intr, NoneNumber, xmin)
 }
 
-func Xuplims(intr interface{}) Option {
+func XUpLims(intr interface{}) Option {
 	if _, ok := convertBool(intr); ok {
 		return singletonOption(intr, Bool, xuplims)
 	} else if _, ok := convertBoolArray(intr); ok {
 		return singletonOption(intr, BoolArray, xuplims)
 	}
-	panic("Invalid type for arugment to Xuplims Option.")
+	panic("Invalid type for arugment to XUpLims Option.")
 }
 
 func Y(val float64) Option {
 	return singletonOption(val, Number, y)
 }
 
-func Ydata(vals []float64) Option {
+func YData(vals []float64) Option {
 	return singletonOption(vals, Array, ydata)
 }
 
-func Yerr(vals []float64) Option {
+func YErr(vals []float64) Option {
 	return singletonOption(vals, Array, yerr)
 }
 
-func Ymax(intr interface{}) Option {
+func YMax(intr interface{}) Option {
 	return singletonOption(intr, NoneNumber, ymax)
 }
 
-func Ymin(intr interface{}) Option {
+func YMin(intr interface{}) Option {
 	return singletonOption(intr, NoneNumber, ymin)
 }
 
-func Zorder(val float64) Option {
+func ZOrder(val float64) Option {
 	return singletonOption(val, Number, zorder)
 }

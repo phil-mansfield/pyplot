@@ -11,16 +11,16 @@ func TestPlot(t *testing.T) {
 	errs := []float64{1, 1, 1, 1, 1, 1, 1}
 	lims := []bool{true, false, true, false, true, false, false}
 
-	Figure(Num(13), Facecolor("m"))
-	Plot(xs, ys1, "r", xs, ys2, "g", Lw(3.0), Label(`$\frac{1}{2}$`))
-	Errorbar(xs, []float64{3, 3, 3, 3, 3, 3, 3}, Xerr(errs), Yerr(errs),
-		C("c"), Lolims(lims), Label("My Errors"))
-	Title("My Test Plot", Fontsize(16), Loc("right"))
-	Xlabel("$t$ [seconds]", Name("Sans"))
-	Ylabel(`$2 \times\ \pi / {\rm meow}$`)
-	Ylim(nil, 11)
-	Xscale("symlog", Subsx([]int{2, 3, 4, 5, 6, 7, 8, 9}))
+	Figure(Num(13), FaceColor("m"))
+	Plot(xs, ys1, "r", xs, ys2, "g", LW(3.0), Label(`$\frac{1}{2}$`))
+	ErrorBar(xs, []float64{3, 3, 3, 3, 3, 3, 3}, XErr(errs), YErr(errs),
+		C("c"), LoLims(lims), Label("My Errors"))
+	Title("My Test Plot", FontSize(16), Loc("right"))
+	XLabel("$t$ [seconds]", Name("Sans"))
+	YLabel(`$2 \times\ \pi / {\rm meow}$`)
+	YLim(nil, 11)
+	XScale("symlog", SubsX([]int{2, 3, 4, 5, 6, 7, 8, 9}))
 	Grid(Which("minor"), C("b"))
-	Legend(Fancybox(true))
+	Legend(FancyBox(true))
 	Show()
 }
