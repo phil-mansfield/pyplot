@@ -21,6 +21,7 @@ const (
 	barsabove
 	basex
 	basey
+	bboxInches
 	bboxToAnchor
 	borderaxespad
 	borderpad
@@ -47,6 +48,7 @@ const (
 	fontsize
 	fontstyle
 	fontweight
+	format
 	framealpha
 	frameon
 	ha
@@ -86,6 +88,9 @@ const (
 	nonposx
 	nonposy
 	numpoints
+	orientation
+	padInches
+	papertype
 	pickradius
 	position
 	rotation
@@ -101,6 +106,7 @@ const (
 	subsy
 	text
 	title
+	transparent
 	uplims
 	va
 	variant
@@ -135,6 +141,7 @@ var optionNames = map[optionFlag]string {
 	basex: "basex",
 	basey: "basey",
 	barsabove: "barsabove",
+	bboxInches: "bbox_inches",
 	bboxToAnchor: "bbox_to_anchor",
 	borderaxespad: "borderaxespad",
 	borderpad: "borderpad",
@@ -163,6 +170,7 @@ var optionNames = map[optionFlag]string {
 	fontsize: "fontsize",
 	fontstyle: "fontstyle",
 	fontweight: "fontweight",
+	format: "format",
 	ha: "ha",
 	handlelength: "handlelength",
 	handletextpad: "handletextpad",
@@ -200,6 +208,9 @@ var optionNames = map[optionFlag]string {
 	nonposy: "nonposy",
 	num: "num",
 	numpoints: "numpoints",
+	orientation: "orientation",
+	papertype: "papertype",
+	padInches: "padInches",
 	pickradius: "pickradius",
 	position: "position",
 	rotation: "rotation",
@@ -215,6 +226,7 @@ var optionNames = map[optionFlag]string {
 	subsy: "subsy",
 	text: "text",
 	title: "title",
+	transparent: "transparent",
 	uplims: "uplims",
 	va: "va",
 	variant: "variant",
@@ -248,6 +260,7 @@ var optionFuncs = map[optionFlag]interface{} {
 	barsabove: BarsAbove,
 	basex: BaseX,
 	basey: BaseY,
+	bboxInches: BboxInches,
 	bboxToAnchor: BboxToAnchor,
 	borderaxespad: BorderAxesPad,
 	borderpad: BorderPad,
@@ -274,6 +287,7 @@ var optionFuncs = map[optionFlag]interface{} {
 	fontsize: FontSize,
 	fontstyle: FontStyle,
 	fontweight: FontWeight,
+	format: Format,
 	framealpha: FrameAlpha,
 	frameon: FrameOn,
 	ha: HA,
@@ -313,6 +327,9 @@ var optionFuncs = map[optionFlag]interface{} {
 	numpoints: NumPoints,
 	nonposx: NonPosX,
 	nonposy: NonPosY,
+	orientation: Orientation,
+	padInches: PadInches,
+	papertype: PaperType,
 	pickradius: PickRadius,
 	position: Position,
 	rotation: Rotation,
@@ -328,6 +345,7 @@ var optionFuncs = map[optionFlag]interface{} {
 	style: Style,
 	text: Text,
 	title: Title,
+	transparent: Transparent,
 	uplims: UpLims,
 	va: VA,
 	variant: Variant,
@@ -433,6 +451,10 @@ func BaseX(val float64) Option {
 
 func BaseY(val float64) Option {
 	return singletonOption(val, Number, basey)
+}
+
+func BboxInches(val float64) Option {
+	return singletonOption(val, Number, bboxInches)
 }
 
 func BboxToAnchor(x, y float64) Option {
@@ -568,6 +590,10 @@ func FontWeight(val string) Option {
 	}
 
 	return singletonOption(val, String, fontweight)
+}
+
+func Format(val string) Option {
+	return singletonOption(val, String, format)
 }
 
 func FrameAlpha(intr interface{}) Option {
@@ -761,6 +787,22 @@ func NumPoints(intr interface{}) Option {
 	return singletonOption(intr, NoneInt, numpoints)
 }
 
+func Orientation(val string) Option {
+	if val != "landscape" && val != "portrait" {
+		panic("Invalid value for Orientation Option.")
+	}
+
+	return singletonOption(val, String, orientation)
+}
+
+func PadInches(val float64) Option {
+	return singletonOption(val, Number, padInches)
+}
+
+func PaperType(val string) Option {
+	return singletonOption(val, String, papertype)
+}
+
 func PickRadius(val float64) Option {
 	return singletonOption(val, Number, pickradius)
 }
@@ -843,6 +885,10 @@ func SubsY(vals []int) Option {
 
 func Text(val string) Option {
 	return singletonOption(val, String, text)
+}
+
+func Transparent(val bool) Option {
+	return singletonOption(val, Bool, transparent)
 }
 
 func UpLims(intr interface{}) Option {

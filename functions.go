@@ -13,6 +13,7 @@ var (
 	legendOptions = make(map[optionFlag]bool)
 	plotOptions = make(map[optionFlag]bool)
 	rcOptions = make(map[optionFlag]bool)
+	savefigOptions = make(map[optionFlag]bool)
 	titleOptions = make(map[optionFlag]bool)
 
 	xlimOptions = make(map[optionFlag]bool)
@@ -118,6 +119,20 @@ func Plot(args ...interface{}) {
 
 func RC(group string, opts ...Option) {
 	panic("NYI")
+}
+
+func SaveFig(fname string, opts ...Option) {
+	args := make([]string, 1)
+	args[0], _ = convertString(fname)
+
+	for _, opt := range opts {
+		str, ok := opt(savefigOptions)
+		if !ok { panic("Invalid Option argument for SaveFig function.") }
+		args = append(args, str)
+	}
+
+	line := fmt.Sprintf("plt.savefig(%s)", strings.Join(args, ","))
+	lines = append(lines, line)
 }
 
 func Title(s string, opts ...Option) {
@@ -294,10 +309,12 @@ func init() {
 		framealpha, mode, title, borderpad, labelspacing, handlelength,
 		handletextpad, borderaxespad, columnspacing)
 	register(plotOptions, line2DOptions...)
+	register(savefigOptions, bboxInches, dpi, edgecolor, facecolor,
+		format, frameon, orientation, padInches, papertype, transparent)
 	register(titleOptions, append([]optionFlag{loc}, textOptions...)...)
 
 	register(xlimOptions, xmin, xmax)
-	register(xlimOptions, ymin, ymax)
+	register(ylimOptions, ymin, ymax)
 
 	register(xLogScaleOptions, basex, nonposx, subsx)
 	register(xSymlogScaleOptions, basex, nonposx, subsx, linscalex)
