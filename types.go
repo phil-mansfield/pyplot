@@ -73,11 +73,11 @@ func convertArray(val interface{}) (string, bool) {
 	switch xs := val.(type) {
 	case []float64:
 		items := make([]string, len(xs))
-		for i, x := range xs { items[i] = fmt.Sprintf("%g", x) }
+		for i, x := range xs { items[i] = fmt.Sprintf("%.4g", x) }
 		return fmt.Sprintf("[%s]", strings.Join(items, ",")), true
 	case []float32:
 		items := make([]string, len(xs))
-		for i, x := range xs { items[i] = fmt.Sprintf("%g", x) }
+		for i, x := range xs { items[i] = fmt.Sprintf("%.4g", x) }
 		return fmt.Sprintf("[%s]", strings.Join(items, ",")), true
 	case []int:
 		items := make([]string, len(xs))
