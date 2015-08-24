@@ -9,12 +9,20 @@ import (
 )
 
 var (
-	lines []string = []string{ "import matplotlib.pyplot as plt" }
+	lines []string = []string{
+		"import matplotlib.pyplot as plt",
+		"import numpy as np",
+	}
 )
 
 func InsertLine(s string) { lines = append(lines, s) }
 
-func Reset() { lines = []string{ "import matplotlib.pyplot as plt" } }
+func Reset() {
+	lines = []string{
+		"import matplotlib.pyplot as plt",
+		"import numpy as np",
+	}
+}
 
 func Show() {
 	lines = append(lines, "plt.show()")

@@ -2,6 +2,7 @@ package pyplot
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 )
@@ -34,8 +35,9 @@ func convertInt(val interface{}) (string, bool) {
 func convertNumber(val interface{}) (string, bool) {
 	str, isInt := convertInt(val)
 	if isInt { return str, true }
-	switch val.(type) {
-	case float32, float64: return fmt.Sprintf("%g", val), true
+	switch t := val.(type) {
+	case float32: return convertFloat64(float64(t)), true
+	case float64: return convertFloat64(t), true
 	default: return "", false
 	}
 }
@@ -69,15 +71,22 @@ func convertBoolArray(val interface{}) (string, bool) {
 	return fmt.Sprintf("[%s]", strings.Join(ss, ",")), true
 }
 
+func convertFloat64(val float64) string {
+	if math.IsNaN(val) { return "np.nan" }
+	if math.IsInf(val, +1)  { return "+np.inf" }
+	if math.IsInf(val, -1)  { return "-np.inf" }
+	return fmt.Sprintf("%g", val)
+}
+
 func convertArray(val interface{}) (string, bool) {
 	switch xs := val.(type) {
 	case []float64:
 		items := make([]string, len(xs))
-		for i, x := range xs { items[i] = fmt.Sprintf("%.4g", x) }
+		for i, x := range xs { items[i] = convertFloat64(x) }
 		return fmt.Sprintf("[%s]", strings.Join(items, ",")), true
 	case []float32:
 		items := make([]string, len(xs))
-		for i, x := range xs { items[i] = fmt.Sprintf("%.4g", x) }
+		for i, x := range xs { items[i] = convertFloat64(float64(x)) }
 		return fmt.Sprintf("[%s]", strings.Join(items, ",")), true
 	case []int:
 		items := make([]string, len(xs))
